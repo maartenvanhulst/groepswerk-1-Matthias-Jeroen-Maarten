@@ -1,6 +1,6 @@
 # Groepswerk 1
 
-Maarten, Benjamin, Jeroen
+Maarten, Mattias, Jeroen
 
 ## Getting started
 
