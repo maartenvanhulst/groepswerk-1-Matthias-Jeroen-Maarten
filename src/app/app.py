@@ -1,23 +1,8 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
 
-app = Flask(__name__)
-
-
-@app.route("/api/v1/hello/")
-@app.route("/api/v1/hello/<name>")
-def hello_json(name="world"):
-    msg = {"hello": name}
-
-    return jsonify(msg)
+app = Flask(__name__, static_url_path="/static", static_folder="templates/static")
 
 
-@app.route("/hello/")
-@app.route("/hello/<name>")
-def hello_html(name="world"):
-    data = {
-        "person": {
-            "first_name": "Yves",
-            "last_name": "Vindevogel"
-        }
-    }
-    return render_template("hello.html", data=data)
+@app.route("/")
+def index_html():
+    return render_template("index.html", data=None)
