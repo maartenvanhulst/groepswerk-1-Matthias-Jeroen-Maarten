@@ -1,4 +1,4 @@
-from core.logger_factory import LoggerFactory
+from controller.logger_factory import LoggerFactory
 
 
 class LoggingObject:

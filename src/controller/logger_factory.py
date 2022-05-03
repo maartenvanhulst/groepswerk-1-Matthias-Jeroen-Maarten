@@ -1,17 +1,24 @@
 import logging
 import logging.config
+import os
+import pathlib
 
 import yaml as yaml
 
-from core.singleton import Singleton
+from controller.singleton import Singleton
 
 
 class LoggerFactory(metaclass=Singleton):
     __loggers = {}
 
     def __init__(self):
+        root_dir = pathlib.Path(os.getcwd())
+
+        while not os.path.exists(os.path.join(root_dir, "logging.yaml")):
+            root_dir = pathlib.Path(root_dir.parent)
+
         if len(self.__loggers) == 0:
-            with open("logging.yaml", "r") as config_file:
+            with open(os.path.join(root_dir, "logging.yaml"), "r") as config_file:
                 config = yaml.safe_load(config_file.read())
                 logging.config.dictConfig(config)
 
