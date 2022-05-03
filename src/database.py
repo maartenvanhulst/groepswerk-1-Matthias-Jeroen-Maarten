@@ -150,7 +150,7 @@ def db_execute(query, data=None):
     except Exception as e:
         handle_unexpected(e)
 
-# while os.getcwd()[-12:] != 'groepswerk-1':
-#     os.chdir('..')
-#
-# db_execute(open('./src/database/create_db.sql', 'r').read())
+while os.getcwd()[-12:] != 'groepswerk-1':
+    os.chdir('..')
+
+db_execute(open('./src/database/create_db.sql', 'r').read())
