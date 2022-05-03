@@ -1,16 +1,17 @@
 import psycopg2
 import yaml
 import os
+import controller.logging_object as logging_object
 
 from src.errors import *
 
 
-class DataObject:
+class DataObject(logging_object):
 
     connection = None
 
     def __init__(self):
-       pass
+        pass
 
     def db_get_connection(self):
         while os.getcwd()[-12:] != 'groepswerk-1':
@@ -96,10 +97,13 @@ class DataObject:
 
 
 if __name__ == "__main__":
-    d_object = DataObject()
 
-    while os.getcwd()[-12:] != 'groepswerk-1':
-        os.chdir('..')
+    d_object = DataObject()
+    os.chdir("..")
+    print(os.getcwd())
+    # while os.getcwd()[-12:] != 'groepswerk-1':
+    #
+    #     os.chdir('..')
 
     d_object.db_execute(open('./src/database/create_db.sql', 'r').read())
 

@@ -5,7 +5,7 @@ import pathlib
 
 import yaml as yaml
 
-from controller.singleton import Singleton
+from singleton import Singleton
 
 
 class LoggerFactory(metaclass=Singleton):
