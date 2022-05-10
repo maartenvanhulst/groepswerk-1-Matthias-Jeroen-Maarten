@@ -1,4 +1,4 @@
-python=3.10.4
+python=3.9
 psycopg2~=2.9.3
 yaml=0.2.5
 psycopg2=2.9.3
