@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     while not os.path.exists(os.path.join(root_dir, "connection.secret")):
         if os.path.exists(os.path.join(root_dir, "README.mb")):
-            root_dir = os.path.join(root_dir, "./src/app")
+            root_dir = os.path.join(root_dir, "./src")
         else:
             root_dir = pathlib.Path(root_dir.parent)
         os.chdir(root_dir)
