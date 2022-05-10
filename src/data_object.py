@@ -2,16 +2,17 @@ import psycopg2
 import pathlib
 import yaml
 import os
+import controller.logging_object as logging_object
 
 from src.errors import *
 
 
-class DataObject:
+class DataObject(logging_object):
 
     connection = None
 
     def __init__(self):
-        pass
+        super.__init__()
 
     def db_get_connection(self):
 
@@ -93,3 +94,16 @@ class DataObject:
 
         except Exception as e:
             handle_unexpected(e)
+
+
+if __name__ == "__main__":
+
+    d_object = DataObject()
+    os.chdir("..")
+    print(os.getcwd())
+    # while os.getcwd()[-12:] != 'groepswerk-1':
+    #
+    #     os.chdir('..')
+
+    d_object.db_execute(open('./src/database/create_db.sql', 'r').read())
+
