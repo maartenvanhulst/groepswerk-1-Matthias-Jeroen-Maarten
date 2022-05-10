@@ -76,9 +76,10 @@ class DataObject(LoggingObject):
         self.connection = self.db_get_connection()
         self.log.info('Getting cursor')
         cursor = self.db_get_cursor()
+        self.log.info(f'cursor_1: {cursor}')
 
         try:
-            self.log.info('Starting query execute')
+            self.log.info('Starting query execution')
             if data is None:
                 cursor.execute(query)
             else:
@@ -93,6 +94,8 @@ class DataObject(LoggingObject):
 
         try:
             self.connection.commit()
+            reply = cursor.fetchall()
+            self.log.info('Results fetched')
 
         except Exception as e:
             handle_unexpected(e)
@@ -103,5 +106,5 @@ class DataObject(LoggingObject):
         except Exception as e:
             handle_unexpected(e)
 
-    def db_read(self):
-        return self.db_get_cursor().fetchall()
+        if reply != None:
+            return reply

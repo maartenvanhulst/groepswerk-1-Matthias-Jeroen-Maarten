@@ -10,9 +10,8 @@ app = Flask(__name__, static_url_path="/static", static_folder="templates/static
 def index_html():
     root_dir = os.getcwd()
     d_object = DataObject()
-    d_object.db_execute(open(os.path.join(root_dir, 'src', 'database', 'get_clubs.sql'), 'r').read())
-    resp = d_object.db_read()
-    print(resp)
+    query = d_object.db_execute(open(os.path.join(root_dir, 'src', 'database', 'get_clubs.sql'), 'r').read())
+    print(query)
     return render_template("index.html", data=None)
 
 
