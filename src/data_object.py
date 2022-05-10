@@ -1,4 +1,5 @@
 import psycopg2
+import pathlib
 import yaml
 import os
 
@@ -10,15 +11,20 @@ class DataObject:
     connection = None
 
     def __init__(self):
-       pass
+        pass
 
     def db_get_connection(self):
-        while os.getcwd()[-12:] != 'groepswerk-1':
-            os.chdir('..')
 
         try:
+
             if self.connection is None:
-                with open("connection.secret", "r") as connect_options:
+                root_dir = pathlib.Path(os.getcwd())
+
+                while not os.path.exists(os.path.join(root_dir, "connection.secret")):
+                    root_dir = pathlib.Path(root_dir.parent)
+                    os.chdir(root_dir)
+
+                with open("./connection.secret", "r") as connect_options:
                     options = yaml.load(connect_options, Loader=yaml.FullLoader)
 
                 self.connection = psycopg2.connect(
@@ -79,27 +85,11 @@ class DataObject:
         try:
             self.connection.commit()
 
-        # except mysql.connector.Error as e:
-        #     handle_error(FATAL_ERROR_IN_COMMIT, e)
-
         except Exception as e:
             handle_unexpected(e)
 
         try:
             cursor.close()
 
-        # except mysql.connector.Error as e:
-        #     handle_error(ERROR_CANNOT_CLOSE_CURSOR, e)
-
         except Exception as e:
             handle_unexpected(e)
-
-
-if __name__ == "__main__":
-    d_object = DataObject()
-
-    while os.getcwd()[-12:] != 'groepswerk-1':
-        os.chdir('..')
-
-    d_object.db_execute(open('./src/database/create_db.sql', 'r').read())
-

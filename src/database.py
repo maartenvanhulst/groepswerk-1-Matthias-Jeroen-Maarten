@@ -10,8 +10,9 @@ __CONNECTION = None
 def db_get_connection():
     global __CONNECTION
 
-    while os.getcwd()[-12:] != 'groepswerk-1':
+    while os.getcwd()[-4:] != ['s','r','c']:
         os.chdir('..')
+
 
     try:
         if __CONNECTION is None:
