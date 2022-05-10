@@ -24,6 +24,7 @@ class DataObject(LoggingObject):
                 while not os.path.exists(os.path.join(root_dir, "connection.secret")):
                     root_dir = pathlib.Path(root_dir.parent)
                     os.chdir(root_dir)
+                    super()
 
                 with open("./connection.secret", "r") as connect_options:
                     options = yaml.load(connect_options, Loader=yaml.FullLoader)
