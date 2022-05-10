@@ -13,6 +13,18 @@ def index_html():
 
 if __name__ == "__main__":
 
+    root_dir = pathlib.Path(os.getcwd())
+
+    while not os.path.exists(os.path.join(root_dir, "connection.secret")):
+        if os.path.exists(os.path.join(root_dir, "README.mb")):
+            root_dir = os.path.join(root_dir, "./src/app")
+        else:
+            root_dir = pathlib.Path(root_dir.parent)
+        os.chdir(root_dir)
+
     d_object = DataObject()
 
-    d_object.db_execute(open(os.path.join(root_dir, './src/database/create_db.sql'), 'r').read())
+    root_dir = os.getcwd()
+    print(root_dir)
+
+    d_object.db_execute(open(os.path.join(root_dir, './database/create_db.sql'), 'r').read())

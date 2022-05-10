@@ -2,17 +2,17 @@ import psycopg2
 import pathlib
 import yaml
 import os
-import controller.logging_object as logging_object
+from src.controller.logging_object import LoggingObject
 
 from src.errors import *
 
 
-class DataObject(logging_object):
+class DataObject(LoggingObject):
 
     connection = None
 
     def __init__(self):
-        super.__init__()
+        super().__init__()
 
     def db_get_connection(self):
 
