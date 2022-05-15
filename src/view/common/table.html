@@ -1,0 +1,30 @@
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      {% for d in data["Column_names"]%}
+      <th scope="col">{{ d }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row_data in data["data"]%}
+    <tr>
+      {% for column_data in row_data %}
+        <td>
+
+          {# Check if there is a list within the column data, if so, format by adding the next element on a new line #}
+
+          {% if column_data is not string %}
+              {% for inner_column_data in column_data %}
+                {{ inner_column_data }}<br>
+              {% endfor %}
+          {% else %}
+              {{ column_data }}
+          {% endif %}
+
+        </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
