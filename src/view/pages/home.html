@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+            <div class="row ms-3">
+                <div class="col-6 mt-3">
+                   <h3>Rangschikking</h3>
+                   {%  include "common/table.html" %}
+                </div>
+                <div class="col-6 mt-3">
+                   <h3>Recent resulaat</h3>
+                    {# set data2 to data before generating html table#}
+                    {% set data = data2 %}
+                    {%  include "common/table.html" %}
+                </div>
+            </div>
+
+
+
+{% endblock %}

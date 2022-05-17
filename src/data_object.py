@@ -2,34 +2,38 @@ import psycopg2
 import pathlib
 import yaml
 import os
-import controller.logging_object as logging_object
+from src.controller.logging_object import LoggingObject
 
 from src.errors import *
 
 
-class DataObject(logging_object):
+class DataObject(LoggingObject):
 
     connection = None
 
     def __init__(self):
-        super.__init__()
+        super().__init__()
 
     def db_get_connection(self):
 
         try:
 
             if self.connection is None:
+                self.log.info('No open connection')
                 root_dir = pathlib.Path(os.getcwd())
+                self.log.info(f"path: {root_dir}")
 
-                while not os.path.exists(os.path.join(root_dir, "connection.secret")):
+                while not os.path.exists(os.path.join(root_dir, 'src', "connection.secret")):
                     root_dir = pathlib.Path(root_dir.parent)
-                    os.chdir(root_dir)
+                self.log.info(f"path: {root_dir}")
 
-                with open("./connection.secret", "r") as connect_options:
+                with open(os.path.join(root_dir, 'src', "connection.secret"), "r") as connect_options:
                     options = yaml.load(connect_options, Loader=yaml.FullLoader)
+                    self.log.info('Connection options loaded')
 
                 self.connection = psycopg2.connect(
                     f"dbname={options['database']} user={options['user']} password={options['password']}")
+                self.log.info('Connected')
 
             return self.connection
 
@@ -68,14 +72,19 @@ class DataObject(logging_object):
                 handle_unexpected(e)
 
     def db_execute(self, query, data=None):
+        self.log.info('Getting connection')
         self.connection = self.db_get_connection()
+        self.log.info('Getting cursor')
         cursor = self.db_get_cursor()
+        self.log.info(f'cursor_1: {cursor}')
 
         try:
+            self.log.info('Starting query execution')
             if data is None:
                 cursor.execute(query)
             else:
                 cursor.execute(query, data)
+            self.log.info('Query executed')
 
         except psycopg2.OperationalError as e:
             handle_error(FATAL_ERROR_IN_QUERY, e)
@@ -85,6 +94,8 @@ class DataObject(logging_object):
 
         try:
             self.connection.commit()
+            reply = cursor.fetchall()
+            self.log.info('Results fetched')
 
         except Exception as e:
             handle_unexpected(e)
@@ -95,15 +106,5 @@ class DataObject(logging_object):
         except Exception as e:
             handle_unexpected(e)
 
-
-if __name__ == "__main__":
-
-    d_object = DataObject()
-    os.chdir("..")
-    print(os.getcwd())
-    # while os.getcwd()[-12:] != 'groepswerk-1':
-    #
-    #     os.chdir('..')
-
-    d_object.db_execute(open('./src/database/create_db.sql', 'r').read())
-
+        if reply != None:
+            return reply
