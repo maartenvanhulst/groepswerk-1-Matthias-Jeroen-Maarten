@@ -2,7 +2,7 @@ import psycopg2
 import pathlib
 import yaml
 import os
-from src.controller.logging_object import LoggingObject
+from src.logging_object import LoggingObject
 
 from src.errors import *
 
@@ -10,9 +10,14 @@ from src.errors import *
 class DataObject(LoggingObject):
 
     connection = None
+    model = None
+    root_dir = os.getcwd()
 
-    def __init__(self):
+    def __init__(self, fetch_by_id_query, fetch_all_query, insert_query):
         super().__init__()
+        self.fetch_query = fetch_by_id_query
+        self.fetch_all_query = fetch_all_query
+        self.insert_query = insert_query
 
     def db_get_connection(self):
 
@@ -108,3 +113,20 @@ class DataObject(LoggingObject):
 
         if reply != None:
             return reply
+
+    def fetch_by_id(self, id: int):
+        query = self.db_execute(
+            open(os.path.join(self.root_dir, 'src', 'database', self.fetch_by_id_query), 'r').read(),
+            id)
+        self.model = Model(*query[0])
+
+    def fetch_all(self):
+        query = self.db_execute(
+            open(os.path.join(self.root_dir, 'src', 'database', self.fetch_all_query), 'r').read())
+        return query
+
+    def insert(self):
+        record = []
+        for field in self.__dataclass_fields__:
+            record.append(getattr(self, field))
+        self.db_execute(open(os.path.join(self.root_dir, 'src', 'database', self.insert_query), 'r').read(), record)
