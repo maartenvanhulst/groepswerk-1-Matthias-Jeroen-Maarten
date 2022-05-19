@@ -1,9 +1,9 @@
-from attr import dataclass
+import os
+from src.data_object import DataObject
 
 
-@dataclass
-class Matchday:
-    id: int
-    name: str
-    sort_order: int
-    series_id: int
+class Matchday(DataObject):
+    root_dir = os.getcwd()
+
+    def __init__(self, model):
+        super(Matchday, self).__init__(model, 'get_matchday_by_id.sql', 'get_matchdays.sql', 'add_matchday.sql')

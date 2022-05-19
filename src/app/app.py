@@ -1,7 +1,6 @@
 from flask import Flask, render_template, send_from_directory
 import os
 import pathlib
-from src.controller.club import Club
 
 app = Flask(__name__, static_url_path="/static", static_folder="../view/static", template_folder="../view")
 app.config["UPLOAD_FOLDER"] = "src/view/static/downloads"

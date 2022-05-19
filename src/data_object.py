@@ -10,11 +10,11 @@ from src.errors import *
 class DataObject(LoggingObject):
 
     connection = None
-    model = None
-    root_dir = os.getcwd()
+    root_dir = os.chdir('..')
 
-    def __init__(self, fetch_by_id_query, fetch_all_query, insert_query):
+    def __init__(self, model, fetch_by_id_query, fetch_all_query, insert_query):
         super().__init__()
+        self.model = model
         self.fetch_query = fetch_by_id_query
         self.fetch_all_query = fetch_all_query
         self.insert_query = insert_query
@@ -84,11 +84,19 @@ class DataObject(LoggingObject):
         self.log.info(f'cursor_1: {cursor}')
 
         try:
-            self.log.info('Starting query execution')
+            self.log.info(f'Starting query execution: {query}')
             if data is None:
+                self.log.info('Running query with data fetch')
                 cursor.execute(query)
+
             else:
+                self.log.info('Running query without data fetch')
                 cursor.execute(query, data)
+                try:
+                    self.connection.commit()
+
+                except Exception as e:
+                    handle_unexpected(e)
             self.log.info('Query executed')
 
         except psycopg2.OperationalError as e:
@@ -99,7 +107,11 @@ class DataObject(LoggingObject):
 
         try:
             self.connection.commit()
-            reply = cursor.fetchall()
+            self.log.info(data)
+            if data == None:
+                reply = cursor.fetchall()
+            else:
+                reply = None
             self.log.info('Results fetched')
 
         except Exception as e:
@@ -127,6 +139,6 @@ class DataObject(LoggingObject):
 
     def insert(self):
         record = []
-        for field in self.__dataclass_fields__:
-            record.append(getattr(self, field))
+        for field in self.model.__dataclass_fields__:
+            record.append(getattr(self.model, field))
         self.db_execute(open(os.path.join(self.root_dir, 'src', 'database', self.insert_query), 'r').read(), record)

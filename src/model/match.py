@@ -1,23 +1,9 @@
-import datetime
+import os
+from src.data_object import DataObject
 
-from attr import dataclass
 
+class Match(DataObject):
+    root_dir = os.getcwd()
 
-@dataclass
-class Match:
-    id: int
-    date: datetime.date
-    start_time: datetime.time
-    home_score: int
-    away_score: int
-    home_alt_score: int
-    away_alt_score: int
-    is_forfeit_home: bool
-    is_forfeit_away: bool
-    is_postponed: bool
-    is_canceled: bool
-    away_team_id: int
-    home_team_id: int
-    location_id: int
-    match_day_id: int
-    referee_id: int
+    def __init__(self, model):
+        super(Match, self).__init__(model, 'get_match_by_id.sql', 'get_matches.sql', 'add_match.sql')
