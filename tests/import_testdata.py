@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 import os
+from src.controller.settings import Settings
+
+Settings.load()
 
 from src.model.dc_club import Club as dcClub
 from src.model.club import Club
@@ -21,7 +24,7 @@ matchdays = pd.read_excel(xlsx, 'Matchday')
 for index, row in clubs.iterrows():
     dc = dcClub(*row.tolist())
     c = Club(dc)
-    c.db_execute(open(os.path.join(os.getcwd(), 'src', 'database', 'create_db.sql'), 'r').read(), ['dummy'])
+    c.db_execute(open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'create_db.sql'), 'r').read(), ['dummy'])
     break
 
 for index, row in clubs.iterrows():
