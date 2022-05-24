@@ -6,16 +6,14 @@ import pathlib
 import yaml as yaml
 
 from src.singleton import Singleton
+from src.controller.settings import Settings
 
 
 class LoggerFactory(metaclass=Singleton):
     __loggers = {}
 
     def __init__(self):
-        root_dir = pathlib.Path(os.getcwd())
-
-        while not os.path.exists(os.path.join(root_dir, "logging.yaml")):
-            root_dir = pathlib.Path(root_dir.parent)
+        root_dir = Settings.ROOT_DIR
 
         if len(self.__loggers) == 0:
             with open(os.path.join(root_dir, "logging.yaml"), "r") as config_file:

@@ -3,6 +3,9 @@ import pathlib
 import yaml
 import os
 from src.logging_object import LoggingObject
+from src.controller.settings import Settings
+
+Settings.load()
 
 from src.errors import *
 
@@ -10,7 +13,7 @@ from src.errors import *
 class DataObject(LoggingObject):
 
     connection = None
-    root_dir = os.chdir('..')
+    root_dir = Settings.ROOT_DIR
 
     def __init__(self, model, fetch_by_id_query, fetch_all_query, insert_query):
         super().__init__()
