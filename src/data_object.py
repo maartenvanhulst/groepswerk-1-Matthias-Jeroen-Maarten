@@ -144,4 +144,4 @@ class DataObject(LoggingObject):
         record = []
         for field in self.model.__dataclass_fields__:
             record.append(getattr(self.model, field))
-        self.db_execute(open(os.path.join(self.root_dir, 'src', 'database', self.insert_query), 'r').read(), record)
+        self.db_execute(open(os.path.join(self.root_dir, 'src', 'database', self.insert_query), 'r').read(), record[1:])
