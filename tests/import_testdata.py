@@ -97,7 +97,7 @@ for index, row in clubs.iterrows():
 for index, row in teams.iterrows():
     row = row.replace({np.nan: None})
     dc = dcTeam(*row.tolist())
-    c = teams(dc)
+    c = Team(dc)
     c.insert()
 
 for index, row in matches.iterrows():
