@@ -46,13 +46,17 @@ clubs = pd.read_excel(xlsx, 'Club')
 teams = pd.read_excel(xlsx, 'Team')
 matches = pd.read_excel(xlsx, 'Match')
 
-
-
- for index, row in clubs.iterrows():
+for index, row in clubs.iterrows():
      dc = dcClub(*row.tolist())
      c = Club(dc)
      c.db_execute(open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'create_db.sql'), 'r').read(), ['dummy'])
      break
+
+for index, row in seasons.iterrows():
+    row = row.replace({np.nan: None})
+    dc = dcSeason(*row.tolist())
+    c = Season(dc)
+    c.insert()
 
 for index, row in clubs.iterrows():
     row = row.replace({np.nan: None})
