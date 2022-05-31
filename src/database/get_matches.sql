@@ -1,1 +1,1 @@
-SELECT * FROM public.matchd
+SELECT * FROM public.match

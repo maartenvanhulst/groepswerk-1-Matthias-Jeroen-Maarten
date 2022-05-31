@@ -1,0 +1,1 @@
+SELECT * FROM public.season WHERE id = %s
