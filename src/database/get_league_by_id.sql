@@ -1,0 +1,1 @@
+SELECT * FROM public.league WHERE id = %s

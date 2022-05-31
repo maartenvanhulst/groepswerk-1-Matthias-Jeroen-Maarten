@@ -1,6 +1,6 @@
 from logging import Logger
 
-from src.controller.logger_factory import LoggerFactory
+from src.logger_factory import LoggerFactory
 
 
 class LoggingObject:

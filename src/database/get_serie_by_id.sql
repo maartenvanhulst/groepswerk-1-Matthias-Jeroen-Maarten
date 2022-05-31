@@ -1,0 +1,1 @@
+SELECT * FROM public.serie WHERE id = %s
