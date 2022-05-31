@@ -52,27 +52,27 @@ for index, row in clubs.iterrows():
      c.db_execute(open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'create_db.sql'), 'r').read(), ['dummy'])
      break
 
-for index, row in seasons.iterrows():
-    row = row.replace({np.nan: None})
-    dc = dcSeason(*row.tolist())
-    c = Season(dc)
-    c.insert()
-
-for index, row in clubs.iterrows():
-    row = row.replace({np.nan: None})
-    dc = dcClub(*row.tolist())
-    c = Club(dc)
-    c.insert()
-
+# for index, row in seasons.iterrows():
+#     row = row.replace({np.nan: None})
+#     dc = dcSeason(*row.tolist())
+#     c = Season(dc)
+#     c.insert()
+#
+# for index, row in clubs.iterrows():
+#     row = row.replace({np.nan: None})
+#     dc = dcClub(*row.tolist())
+#     c = Club(dc)
+#     c.insert()
+#
 # for index, row in matches.iterrows():
 #     row = row.replace({np.nan: None})
 #     dc = dcMatch(*row.tolist())
 #     c = Match(dc)
 #     c.insert()
-
-for index, row in matchdays.iterrows():
-    row = row.replace({np.nan: None})
-    dc = dcMatchday(*row.tolist())
-    c = Matchday(dc)
-    c.insert()
+#
+# for index, row in matchdays.iterrows():
+#     row = row.replace({np.nan: None})
+#     dc = dcMatchday(*row.tolist())
+#     c = Matchday(dc)
+#     c.insert()
 
