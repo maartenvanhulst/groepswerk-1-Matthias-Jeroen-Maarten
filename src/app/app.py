@@ -15,7 +15,7 @@ app.config["UPLOAD_FOLDER"] = "src/view/static/downloads"
 
 column_name_ls1 = ["Thuisploeg", "VS", "Bezoekers", "Details"]
 data_lst1 = [
-    ("Scorcio Baatsem", "VS", "Bianconeri Roma", ("BOUTERSEM", "31/8/2020", "20:00")),
+    ("Testerkes Baatsem", "VS", "Bianconeri Roma", ("BOUTERSEM", "31/8/2020", "20:00")),
     ("Magos Rojos", "VS", "La Pazz", ("BOUTERSEM", "31/8/2020", "21:00")),
     ("Magos Rojos", "VS", "La Pazz", ("BOUTERSEM", "31/8/2020", "21:00"))
 ]
