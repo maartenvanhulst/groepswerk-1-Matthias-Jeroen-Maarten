@@ -1,1 +1,1 @@
-SELECT * FROM public.serie
+SELECT * FROM public.series

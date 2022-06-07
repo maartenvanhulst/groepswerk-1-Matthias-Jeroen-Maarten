@@ -14,7 +14,7 @@
 
           {# Check if there is a list within the column data, if so, format by adding the next element on a new line #}
 
-          {% if column_data is not string %}
+          {% if column_data is iterable and column_data is not string %}
               {% for inner_column_data in column_data %}
                 {{ inner_column_data }}<br>
               {% endfor %}

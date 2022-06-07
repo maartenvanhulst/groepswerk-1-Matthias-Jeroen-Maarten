@@ -3,6 +3,35 @@ import os
 import pathlib
 from src.controller.settings import Settings
 
+import render_functions
+
+from src.model.dc_season import Season as dcSeason
+from src.model.season import Season
+
+from src.model.dc_league import League as dcLeague
+from src.model.league import League
+
+from src.model.dc_competition import Competition as dcCompetition
+from src.model.competition import Competition
+
+from src.model.dc_series import Series as dcSeries
+from src.model.series import Series
+
+from src.model.dc_matchday import Matchday as dcMatchday
+from src.model.matchday import Matchday
+
+from src.model.dc_player import Player as dcPlayer
+from src.model.player import Player
+
+from src.model.dc_club import Club as dcClub
+from src.model.club import Club
+
+from src.model.dc_team import Team as dcTeam
+from src.model.team import Team
+
+from src.model.dc_match import Match as dcMatch
+from src.model.match import Match
+
 Settings.load()
 
 
@@ -49,6 +78,9 @@ contact_data = [
 def index_html():
     # homepage contains 2 tables pass data for second table by adding a second data set
     # and assigning this data in html template (% set data = data2 %)
+    dc = dcSeries(1, "a", 1, 1)
+    obj = Series(dc)
+    data_dict1 = render_functions.table_all(obj)
     return render_template("pages/home.html", data=data_dict1, data2=data_dict2)
 
 
