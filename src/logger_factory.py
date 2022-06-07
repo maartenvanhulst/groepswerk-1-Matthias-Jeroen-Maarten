@@ -1,13 +1,11 @@
 import logging
 import logging.config
 import os
-import pathlib
 
 import yaml as yaml
 
 from src.singleton import Singleton
 from src.controller.settings import Settings
-
 
 class LoggerFactory(metaclass=Singleton):
     __loggers = {}
