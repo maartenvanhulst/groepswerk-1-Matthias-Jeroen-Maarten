@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory
 import os
 import pathlib
 from src.controller.settings import Settings
+import render_functions
 
 import render_functions
 
@@ -80,8 +81,8 @@ def index_html():
     # and assigning this data in html template (% set data = data2 %)
     dc = dcSeries(1, "a", 1, 1)
     obj = Series(dc)
-    data_dict1 = render_functions.table_all(obj)
-    return render_template("pages/home.html", data=data_dict1, data2=data_dict2)
+    ranking = obj.db_execute(open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'ranking_by_series_id.sql'), 'r').read(), [1,1])
+    return render_template("pages/home.html", data=render_functions.table_ranking(ranking, details=False), data2=data_dict2)
 
 
 @app.route("/kalender/")
@@ -96,7 +97,11 @@ def resultaten_html():
 
 @app.route("/rangschikking/")
 def rangschikking_html():
-    return render_template("pages/kalender.html", data=data_dict1)
+    dc = dcSeries(1, "a", 1, 1)
+    obj = Series(dc)
+    ranking = obj.db_execute(
+        open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'ranking_by_series_id.sql'), 'r').read(), [1, 1])
+    return render_template("pages/kalender.html", data=render_functions.table_ranking(ranking))
 
 
 @app.route("/contact/")

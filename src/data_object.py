@@ -114,7 +114,7 @@ class DataObject(LoggingObject):
             if data == None:
                 reply = cursor.fetchall()
             else:
-                reply = None
+                reply = cursor.fetchall()
             self.log.info('Results fetched')
 
         except Exception as e:

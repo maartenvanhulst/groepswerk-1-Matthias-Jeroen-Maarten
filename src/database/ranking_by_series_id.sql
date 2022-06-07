@@ -1,4 +1,4 @@
-(select
+select
     row_number() over (order by points desc, wins desc, goals_delta desc) as position,
     *
 from
@@ -51,6 +51,5 @@ from
            where away_score is not null
            group by away_team_id
           ) as played_matches
-     group by team_id
+     group by team_id) as calc_ranking
 
-    ) as foo)
