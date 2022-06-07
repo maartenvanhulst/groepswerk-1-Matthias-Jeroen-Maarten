@@ -113,7 +113,7 @@ def downloads():
 def download(filename):
 
     # locate downloads folder
-    root_dir = os.getcwd()
+    root_dir = Settings.ROOT_DIR
     while not os.path.exists(os.path.join(root_dir, 'src', "view", "static", "downloads")):
         root_dir = pathlib.Path(root_dir.parent)
     uploads = os.path.join(root_dir, app.config["UPLOAD_FOLDER"])
