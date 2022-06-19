@@ -1,7 +1,7 @@
 import logging
 
-from controller.logger_factory import LoggerFactory
-from controller.logging_object import LoggingObject
+from src.logger_factory import LoggerFactory
+from src.logging_object import LoggingObject
 
 
 class MyTestObject(LoggingObject):

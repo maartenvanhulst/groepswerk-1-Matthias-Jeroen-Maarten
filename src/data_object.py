@@ -4,18 +4,16 @@ import yaml
 import os
 from src.logging_object import LoggingObject
 from src.controller.settings import Settings
+from src.errors import *
 
 Settings.load()
 
-from src.errors import *
-
 
 class DataObject(LoggingObject):
-
     connection = None
     root_dir = Settings.ROOT_DIR
 
-    def __init__(self, model, fetch_by_id_query, fetch_all_query, insert_query):
+    def __init__(self, model, fetch_by_id_query="", fetch_all_query="", insert_query=""):
         super().__init__()
         self.model = model
         self.fetch_query = fetch_by_id_query
@@ -79,22 +77,33 @@ class DataObject(LoggingObject):
             except Exception as e:
                 handle_unexpected(e)
 
-    def db_execute(self, query, data=None):
+    def db_execute(self, query, input_data=None):
+
         self.log.info('Getting connection')
         self.connection = self.db_get_connection()
+
         self.log.info('Getting cursor')
         cursor = self.db_get_cursor()
+
         self.log.info(f'cursor_1: {cursor}')
+
+        fetched_data = None
 
         try:
             self.log.info(f'Starting query execution: {query}')
-            if data is None:
-                self.log.info('Running query with data fetch')
-                cursor.execute(query)
 
+            # Get data from DB (select)
+            if query.startswith("select") or query.startswith("SELECT"):
+
+                self.log.info('Running fetch data')
+                cursor.execute(query, input_data)
+                fetched_data = cursor.fetchall()
+
+            # Add data into DB (create/insert/update)
             else:
-                self.log.info('Running query without data fetch')
-                cursor.execute(query, data)
+                self.log.info('Running insert/update data')
+                cursor.execute(query, input_data)
+
                 try:
                     self.connection.commit()
 
@@ -109,31 +118,19 @@ class DataObject(LoggingObject):
             handle_unexpected(e)
 
         try:
-            self.connection.commit()
-            self.log.info(data)
-            if data == None:
-                reply = cursor.fetchall()
-            else:
-                reply = cursor.fetchall()
-            self.log.info('Results fetched')
-
-        except Exception as e:
-            handle_unexpected(e)
-
-        try:
             cursor.close()
 
         except Exception as e:
             handle_unexpected(e)
 
-        if reply != None:
-            return reply
+        self.log.info('Connection Closed ')
 
-    def fetch_by_id(self, id: int):
+        return fetched_data
+
+    def fetch_by_id(self, row_id: int):
         query = self.db_execute(
-            open(os.path.join(self.root_dir, 'src', 'database', self.fetch_by_id_query), 'r').read(),
-            id)
-        self.model = Model(*query[0])
+            open(os.path.join(self.root_dir, 'src', 'database', self.fetch_query), 'r').read(), row_id)
+        return query
 
     def fetch_all(self):
         query = self.db_execute(

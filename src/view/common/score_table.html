@@ -1,0 +1,59 @@
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      {% for d in data["Column_names"]%}
+      <th scope="col">{{ d }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row_data in data["data"]%}
+        <tr>
+            <td>{{ row_data[0]}} </td>
+            <td>{{ row_data[1]}} </td>
+            <td>{{ row_data[2]}} </td>
+            <td>{{ row_data[3]}} </td>
+
+        {# Replace unplayed match values from none to - #}
+            <td> {% if row_data[4] is none %}
+                    -
+                 {% else %}
+                {{ row_data[4] }} </td>
+            {% endif %}
+                    <td> {% if row_data[5] is none %}
+                -
+             {% else %}
+            {{ row_data[5] }} </td>
+            {% endif %}
+
+        {# Edit score button #}
+
+            <td>
+                <button type="button" data-title="{{ row_data[1] }} VS {{ row_data[3] }}" data-title2="{{ row_data[4] }}" data-title3="{{ row_data[5] }}" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
+            </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
+{#  modal view  #}
+
+<div class="modal fade" id="myModal"  tabindex="-1" aria-labelledby="myModal" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title">Modal Window</h5>
+          </div>
+          <div class="modal-body">
+            <input type="text" id="score1" name="score1" class="form" placeholder="modal-title" autofocus="">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+    </div>
+  </div>
+</div>
+

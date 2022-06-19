@@ -7,7 +7,7 @@ class Settings(metaclass=Singleton):
     LOGGING_CONFIG_FILE: str = "logging.yaml"
     ROOT_DIR: str = None
 
-    # If the developer instanciates the class, we use the singleton approach
+    # If the developer instantiates the class, we use the singleton approach
     def __init__(self):
         # Skip logging here !
         # Do not use the LoggerFactory here, nor can you inherit from LoggingObject.
@@ -21,7 +21,8 @@ class Settings(metaclass=Singleton):
             # print("Settings class called for the first time")
 
             self.ROOT_DIR = os.getcwd()
-            print(f"Current dir: {self.ROOT_DIR}")
+
+            # print(f"Current dir: {self.ROOT_DIR}")
 
             while not os.path.exists(os.path.join(self.ROOT_DIR, self.LOGGING_CONFIG_FILE)):
                 prev_root = self.ROOT_DIR
@@ -34,9 +35,9 @@ class Settings(metaclass=Singleton):
                     # Not tested on Windows yet
                     raise Exception(f"Can't find the {self.LOGGING_CONFIG_FILE} file, can't determine root directory")
 
-                print(f"Checking: {self.ROOT_DIR}")
+                # print(f"Checking: {self.ROOT_DIR}")
 
-            # print(f"Determined root dir: {self.root_dir}")
+            # print(f"Determined root dir: {self.ROOT_DIR}")
 
             Settings.ROOT_DIR = self.ROOT_DIR
             # This sets the class attribute if the developer calls the class without instantiating

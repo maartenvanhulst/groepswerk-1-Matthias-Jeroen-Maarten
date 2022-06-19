@@ -9,3 +9,28 @@
 <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
 
 <link href="/static/css/styles.css" rel="stylesheet" />
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{# Get button id from table and use this to run query  #}
+
+<script>
+$(document).ready(function() {
+    $("#myModal").on("show.bs.modal", function(event) {
+        // Get the button that triggered the modal
+        var button = $(event.relatedTarget);
+
+        // Extract value from the custom data-* attribute
+        var titleData = button.data("title");
+        var title2Data = button.data("title2");
+        var title3Data = button.data("title3");
+
+        // Change modal title
+        $(this).find(".modal-title").text(titleData);
+        $(this).find(".modal-title2").text(title2Data);
+        $(this).find(".test").text(title3Data);
+    });
+});
+</script>
+

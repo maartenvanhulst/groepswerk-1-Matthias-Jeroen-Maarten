@@ -3,7 +3,6 @@ select
     *
 from
     (select
-            team_id,
             (select team.name from team where team.id = team_id) as team_name,
             sum(points)                                          as points,
             sum(matches)                                         as matches,
@@ -26,7 +25,7 @@ from
                           else 0
                       end)                                                 as points
            from match
-		   right join (select id, series_id from matchday where series_id = %s) as md
+		   right join (select id, series_id from matchday where series_id = 1) as md
 		   on md.id = match.match_day_id
            where home_score is not null
            group by home_team_id
@@ -46,7 +45,7 @@ from
                           else 0
                       end)                                                 as points
            from match
-		   right join (select id, series_id from matchday where series_id = %s) as md
+		   right join (select id, series_id from matchday where series_id = 1) as md
 		   on md.id = match.match_day_id
            where away_score is not null
            group by away_team_id

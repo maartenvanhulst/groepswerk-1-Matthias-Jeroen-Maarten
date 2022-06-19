@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
     <head>
+
         {%  include "common/head.html" %}
 
     </head>
@@ -8,7 +9,7 @@
     <body>
 
         {%  include "common/banner.html" %}
-        {%  include "common/navigation.html" %}
+        {%  include "common/admin_navigation.html" %}
 
         <div class="container px-0 px-lg-0 bg-light">
             {% block page_content %}{% endblock %}
@@ -16,5 +17,6 @@
 
         {%  include "common/footer.html" %}
         {%  include "common/bootstrap_js.html" %}
+
     </body>
 </html>

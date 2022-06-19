@@ -14,6 +14,7 @@ drop table if exists series;
 drop table if exists competition;
 drop table if exists league;
 drop table if exists season;
+drop table if exists contact;
 
 create table season
 (
@@ -301,4 +302,13 @@ create table sanction
         constraint fk_player_sanction
             references player
             deferrable initially deferred
+);
+
+create table contact
+(
+    id         bigserial    primary key,
+    role       varchar(50)     not null,
+    name       varchar(50)  not null,
+    email      varchar(255)         not null,
+    phone   varchar(30)
 );
