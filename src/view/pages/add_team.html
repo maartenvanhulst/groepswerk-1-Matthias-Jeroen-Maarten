@@ -1,0 +1,125 @@
+{% extends "admin.html" %}
+
+{% block page_content %}
+
+
+<form class="needs-validation" method="post" novalidate>
+
+  {% set col_name = data["Column_names"] %}
+
+    <div class="row">
+          <div class="col-md-4 mb-3">
+              <label for="validationCustom01">{{ col_name[1] }}</label>
+              <input type="text" class="form-control" name="name" placeholder="" value="" required>
+              <div class="valid-feedback">
+                Looks good!
+            </div>
+          </div>
+        <div class="col-md-4 mb-3">
+              <label for="validationCustom01">{{ col_name[2] }}</label>
+              <input type="text" class="form-control" name="display_name" placeholder="" value="" required>
+              <div class="valid-feedback">
+                Looks good!
+            </div>
+          </div>
+      </div>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label for="validationCustom01">{{ col_name[3] }}</label>
+            <input type="text" class="form-control" name="home_color_1" placeholder="" value="" required>
+                <div class="valid-feedback">
+                Looks good!
+                </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label for="validationCustom02">{{ col_name[4] }}</label>
+            <input type="text" class="form-control" name="home_color_2" placeholder="" value="">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationCustom03">{{ col_name[5] }}</label>
+            <input type="text" class="form-control" name="home_color_3" placeholder="" value="">
+        </div>
+    </div>
+    <div class="row">
+          <div class="col-md-4 mb-3">
+              <label for="validationCustom04">{{ col_name[6] }}</label>
+              <input type="text" class="form-control" name="away_color_1" placeholder="" value="" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                    </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                  <label for="validationCustom05">{{ col_name[7] }}</label>
+                  <input type="text" class="form-control" name="away_color_2" placeholder="" value="">
+              </div>
+            <div class="col-md-4 mb-3">
+                  <label for="validationCustom06">{{ col_name[8] }}</label>
+                  <input type="text" class="form-control" name="away_color_3" placeholder="" value="">
+              </div>
+      </div>
+    <div class="row">
+          <div class="col-md-4 mb-3">
+              <label for="validationCustom07">{{ col_name[9] }}</label>
+              <input type="text" class="form-control" name="alt_color_1" placeholder="" value="" required>
+              <div class="valid-feedback">
+                Looks good!
+            </div>
+          </div>
+        <div class="col-md-4 mb-3">
+              <label for="validationCustom08">{{ col_name[10] }}</label>
+              <input type="text" class="form-control" name="alt_color_2" placeholder="" value="">
+
+          </div>
+        <div class="col-md-4 mb-3">
+              <label for="validationCustom09">{{ col_name[11] }}</label>
+              <input type="text" class="form-control" name="alt_color_3" placeholder="" value="">
+
+          </div>
+      </div>
+    <div class="row">
+          <div class="col-md-4 mb-3">
+              <label for="validationCustom07">{{ col_name[12] }}</label>
+                <select class="form-control" name="club_id">
+                    {% for club in club_data %}
+                        <option value="{{ club[0] }}">{{ club[1] }}</option>
+                    {% endfor %}
+                </select>
+              <div class="valid-feedback">
+                Looks good!
+            </div>
+          </div>
+
+      </div>
+    <div class="row">
+        <div class="col-md-4 mb-3 align-content-center">
+            <button class="btn btn-dark" type="submit">Add Team</button>
+        </div>
+    </div>
+
+</form>
+
+{%  include "common/table.html" %}
+    <script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
+{% endblock %}
+

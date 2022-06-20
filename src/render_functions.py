@@ -91,6 +91,23 @@ def table_scoring(data):
 
     return {"Column_names": header, "data": new_data}
 
+def table_team(data):
+    header = ['Id',
+              'Team Name',
+              'Display Name',
+              'Home color 1',
+              'Home color 2',
+              'Home color 3',
+              'Away color 1',
+              'Away color 2',
+              'Away color 3',
+              'Alt color 1',
+              'Alt color 2',
+              'Alt color 3',
+              'Club'
+              ]
+
+    return {"Column_names": header, "data": data}
 
 if __name__ == "__main__":
     pass

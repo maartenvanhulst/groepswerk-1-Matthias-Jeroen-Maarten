@@ -29,7 +29,7 @@
         {# Edit score button #}
 
             <td>
-                <button type="button" data-title="{{ row_data[1] }} VS {{ row_data[3] }}" data-title2="{{ row_data[4] }}" data-title3="{{ row_data[5] }}" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
+                <button type="button" data-title="{{ row_data[1] }} VS {{ row_data[3] }}" data-title2="{{ row_data[4] }}" data-title3="{{ row_data[5] }}" data-title4="{{ row_data[6] }}" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
             </td>
     </tr>
 
@@ -42,17 +42,24 @@
 <div class="modal fade" id="myModal"  tabindex="-1" aria-labelledby="myModal" style="display: none;" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-        <form>
-          <div class="modal-header">
-            <h5 class="modal-title">Modal Window</h5>
+        <form class="form" method="post">
+          <div class="modal-header text-dark">
+            <h5 class="modal-title text-center">Match Uitslag</h5>
           </div>
-          <div class="modal-body">
-            <input type="text" id="score1" name="score1" class="form" placeholder="modal-title" autofocus="">
+          <div class="modal-body text-center">
+              {# Teams and their score gets filled with current data of row #}
+
+            <label class="text p-md-4" id="teams">none</label>
+            <input type="text" id="score1" name="score1" class="form col-sm-1 text-center" value="" autofocus="">
+            <label class="text-center col-sm-1 ">-</label>
+            <input type="text" id="score2" name="score2" class="form col-sm-1 text-center" value="" autofocus="">
+            <input type="hidden" id="match_id" name="match_id" class="form col-sm-1 text-center" value="" autofocus="">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary" name="submit_button" onclick="window.location.href='/protected';" >Submit Score </button>
           </div>
+        </form>
     </div>
   </div>
 </div>

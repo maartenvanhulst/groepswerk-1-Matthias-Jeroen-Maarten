@@ -17,6 +17,7 @@
 
 <script>
 $(document).ready(function() {
+
     $("#myModal").on("show.bs.modal", function(event) {
         // Get the button that triggered the modal
         var button = $(event.relatedTarget);
@@ -25,12 +26,21 @@ $(document).ready(function() {
         var titleData = button.data("title");
         var title2Data = button.data("title2");
         var title3Data = button.data("title3");
+        var title4Data = button.data("title4");
 
-        // Change modal title
-        $(this).find(".modal-title").text(titleData);
-        $(this).find(".modal-title2").text(title2Data);
-        $(this).find(".test").text(title3Data);
+        // Change None values to empty string in modal score inputs
+
+        if(title2Data == "None") {title2Data = ""}
+        if(title3Data == "None") {title3Data = ""}
+
+        // row data teams, scores en match id is returned
+        $("#teams").text(titleData);
+        $("#score1").attr("value",title2Data);
+        $("#score2").attr("value",title3Data);
+        $("#match_id").attr("value",title4Data);
+
     });
+
 });
 </script>
 

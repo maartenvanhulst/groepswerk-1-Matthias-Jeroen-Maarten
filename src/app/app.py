@@ -178,7 +178,7 @@ def login():
     return render_template("pages/login.html", login="login failed")
 
 
-@app.route('/protected', methods=['GET', 'POST'] )
+@app.route('/scoring', methods=['GET', 'POST'])
 @flask_login.login_required
 def protected():
     user_info = 'Logged in as ' + flask_login.current_user.id
@@ -186,8 +186,65 @@ def protected():
     query = open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'get_scoring_table.sql'), 'r').read()
     scoring_table = data_object.db_execute(query)
 
-    return render_template("pages/protected.html", user_info=user_info, data=render_functions.table_scoring(scoring_table))
+    #Default page
 
+    if request.method == 'GET':
+        return render_template("pages/scoring.html", user_info=user_info, data=render_functions.table_scoring(scoring_table))
+
+    # modal input
+    if request.method == 'POST':
+        score_1 = (request.form.get('score1'))
+        score_2 = request.form.get('score2')
+        match_id = request.form.get('match_id')
+
+        try:
+            update_record = (int(score_1), int(score_2), match_id)
+
+            data_object = DataObject(None)
+            query = open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'update_scoring_table.sql'), 'r').read()
+            data_object.db_execute(query, update_record)
+
+        except ValueError:
+            print("wrong input") # needs to be shown in modal?
+
+        return redirect('/scoring')
+
+
+@app.route("/add_team", methods=["GET", "POST"])
+@flask_login.login_required
+def add_team():
+
+    data_object = DataObject(None)
+    query = open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'get_teams.sql'), 'r').read()
+    teams = data_object.db_execute(query)
+
+    data_object = DataObject(None)
+    query = open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'get_clubs.sql'), 'r').read()
+    clubs = data_object.db_execute(query)
+
+    if request.method == 'POST':
+        name = request.form.get("name")
+        display_name = request.form.get("display_name")
+        home_color_1 = request.form.get("home_color_1")
+        home_color_2 = request.form.get("home_color_2")
+        home_color_3 = request.form.get("home_color_3")
+        away_color_1 = request.form.get("away_color_1")
+        away_color_2 = request.form.get("away_color_2")
+        away_color_3 = request.form.get("away_color_3")
+        alt_color_1 = request.form.get("alt_color_1")
+        alt_color_2 = request.form.get("alt_color_2")
+        alt_color_3 = request.form.get("alt_color_3")
+        club_id = request.form.get("club_id")
+
+        record = [name, display_name, home_color_1, home_color_2, home_color_3, away_color_1, away_color_2, away_color_3, alt_color_1, alt_color_2, alt_color_3, club_id]
+
+        data_object = DataObject(None)
+        query = open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'add_team.sql'), 'r').read()
+        data_object.db_execute(query, record)
+
+        return redirect('/add_team')
+
+    return render_template("pages/add_team.html", data=render_functions.table_team(teams), club_data=clubs)
 
 @app.route('/logout')
 def logout():

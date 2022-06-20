@@ -10,6 +10,10 @@
     {% for row_data in data["data"]%}
     <tr>
       {% for column_data in row_data %}
+          {# Replace none values by empty string #}
+         {% if column_data == None %}
+                {% set column_data = "" %}
+              {% endif %}
         <td>
 
           {# Check if there is a list within the column data, if so, format by adding the next element on a new line #}
@@ -19,6 +23,7 @@
                 {{ inner_column_data }}<br>
               {% endfor %}
           {% else %}
+
               {{ column_data }}
           {% endif %}
 
