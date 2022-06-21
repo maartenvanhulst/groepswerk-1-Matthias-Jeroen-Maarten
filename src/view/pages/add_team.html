@@ -3,7 +3,7 @@
 {% block page_content %}
 
 
-<form class="needs-validation" method="post" novalidate>
+<form class="needs-validation py-4 px-3" method="post" novalidate>
 
   {% set col_name = data["Column_names"] %}
 
@@ -61,10 +61,7 @@
     <div class="row">
           <div class="col-md-4 mb-3">
               <label for="validationCustom07">{{ col_name[9] }}</label>
-              <input type="text" class="form-control" name="alt_color_1" placeholder="" value="" required>
-              <div class="valid-feedback">
-                Looks good!
-            </div>
+              <input type="text" class="form-control" name="alt_color_1" placeholder="" value="">
           </div>
         <div class="col-md-4 mb-3">
               <label for="validationCustom08">{{ col_name[10] }}</label>
@@ -89,18 +86,23 @@
                 Looks good!
             </div>
           </div>
-
       </div>
-    <div class="row">
-        <div class="col-md-4 mb-3 align-content-center">
-            <button class="btn btn-dark" type="submit">Add Team</button>
-        </div>
-    </div>
+            <div class="row md-4">
+                <div class="col-md-4 mb-3"></div>
+                <div class="col-md-4 mb-3 text-center">
+                    <button class="btn btn-danger" type="submit">Add Team</button>
+            </div>
 
+        </div>
 </form>
 
+<div class="text bg-dark p-md-3">
+        <h5 class="text-light">TEAMS</h5>
+</div>
 {%  include "common/table.html" %}
-    <script>
+
+
+<script>
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
   'use strict';
@@ -119,6 +121,7 @@
     });
   }, false);
 })();
+
 </script>
 
 {% endblock %}

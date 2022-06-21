@@ -186,7 +186,7 @@ def protected():
     query = open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'get_scoring_table.sql'), 'r').read()
     scoring_table = data_object.db_execute(query)
 
-    #Default page
+    # Default page
 
     if request.method == 'GET':
         return render_template("pages/scoring.html", user_info=user_info, data=render_functions.table_scoring(scoring_table))
@@ -213,6 +213,7 @@ def protected():
 @app.route("/add_team", methods=["GET", "POST"])
 @flask_login.login_required
 def add_team():
+    user_info = 'Logged in as ' + flask_login.current_user.id
 
     data_object = DataObject(None)
     query = open(os.path.join(Settings.ROOT_DIR, 'src', 'database', 'get_teams.sql'), 'r').read()
@@ -244,7 +245,7 @@ def add_team():
 
         return redirect('/add_team')
 
-    return render_template("pages/add_team.html", data=render_functions.table_team(teams), club_data=clubs)
+    return render_template("pages/add_team.html", data=render_functions.table_team(teams, clubs), club_data=clubs, user_info=user_info)
 
 @app.route('/logout')
 def logout():

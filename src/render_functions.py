@@ -91,7 +91,7 @@ def table_scoring(data):
 
     return {"Column_names": header, "data": new_data}
 
-def table_team(data):
+def table_team(data, clubs):
     header = ['Id',
               'Team Name',
               'Display Name',
@@ -107,7 +107,16 @@ def table_team(data):
               'Club'
               ]
 
-    return {"Column_names": header, "data": data}
+    new_data = []
+    for row in data:
+        row_lst = list(row)
+        club_id = row_lst[12]
+
+        row_lst[12] = clubs[club_id-1][1]
+        new_data.append(row_lst)
+
+    return {"Column_names": header, "data": new_data}
+
 
 if __name__ == "__main__":
     pass
